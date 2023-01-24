@@ -8,11 +8,13 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const path = require("path");
 const { fileURLToPath } = require("url");
+const { connection } = require("./config/db");
+const PORT = process.env.PORT || 5000;
 
 /* CONFIGURATIONS */
 const app = express();
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
@@ -34,3 +36,13 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
+app.listen(PORT, async () => {
+  try {
+    await connection;
+    console.log("Connected Succesfull to db");
+  } catch (err) {
+    console.log("error from db");
+    console.log(err);
+  }
+  console.log(`listing on port ${PORT}`);
+});
