@@ -9,6 +9,7 @@ const morgan = require("morgan");
 const path = require("path");
 const { fileURLToPath } = require("url");
 const { connection } = require("./config/db");
+const { UserRouter } = require("./Routes/user.route");
 const PORT = process.env.PORT || 5000;
 
 /* CONFIGURATIONS */
@@ -24,18 +25,11 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
-/* FILE STORAGE */
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "public/assets");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
+app.get("/", (req, res) => {
+  res.send("Home");
 });
-const upload = multer({ storage });
 
+app.use("/user", UserRouter);
 app.listen(PORT, async () => {
   try {
     await connection;
