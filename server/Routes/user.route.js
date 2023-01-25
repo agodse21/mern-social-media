@@ -1,12 +1,17 @@
+const { Authentication } = require("../middleware/Authentication");
+
 const express = require("express");
 const { UserController } = require("../controllers/user.controller");
-const { upload } = require("../middleware/FileUploader");
-// const { Authentication } = require("../middlewares/Authentication");
 
-const UserRouter = express.Router();
-UserRouter.post("/login", UserController.Login);
-UserRouter.post("/signup", upload.single("picture"), UserController.SignUp);
+const Userrouter = express.Router();
+
+/* READ */
+Userrouter.get("/:id", Authentication, UserController.getUser);
+Userrouter.get("/:id/friends", Authentication, UserController.getUserFriends);
+
+/* UPDATE */
+Userrouter.patch("/:id/:friendId", Authentication, UserController.addRemoveFriend);
 
 module.exports = {
-  UserRouter,
+  Userrouter,
 };

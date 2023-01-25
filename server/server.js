@@ -9,7 +9,8 @@ const morgan = require("morgan");
 const path = require("path");
 const { fileURLToPath } = require("url");
 const { connection } = require("./config/db");
-const { UserRouter } = require("./Routes/user.route");
+const { AuthRouter } = require("./Routes/auth.route");
+const { Userrouter } = require("./Routes/user.route");
 const PORT = process.env.PORT || 5000;
 
 /* CONFIGURATIONS */
@@ -29,7 +30,8 @@ app.get("/", (req, res) => {
   res.send("Home");
 });
 
-app.use("/user", UserRouter);
+app.use("/auth", AuthRouter);
+app.use("/user", Userrouter);
 app.listen(PORT, async () => {
   try {
     await connection;

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const UserSchema = new mongoose.Schema(
+const AuthSchema = new mongoose.Schema(
   {
     firstName: {
       type: String,
@@ -40,8 +40,8 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const UserModel = mongoose.model("user", UserSchema);
+const AuthModel = mongoose.model("auth", AuthSchema);
 
 module.exports = {
-  UserModel,
+  AuthModel,
 };
