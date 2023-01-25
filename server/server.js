@@ -11,6 +11,7 @@ const { fileURLToPath } = require("url");
 const { connection } = require("./config/db");
 const { AuthRouter } = require("./Routes/auth.route");
 const { Userrouter } = require("./Routes/user.route");
+const { Postrouter } = require("./Routes/post.route");
 const PORT = process.env.PORT || 5000;
 
 /* CONFIGURATIONS */
@@ -32,6 +33,7 @@ app.get("/", (req, res) => {
 
 app.use("/auth", AuthRouter);
 app.use("/user", Userrouter);
+app.use("/post", Postrouter);
 app.listen(PORT, async () => {
   try {
     await connection;
