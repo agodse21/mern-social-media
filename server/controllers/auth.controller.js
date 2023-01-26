@@ -13,6 +13,7 @@ const SignUp = async (req, res) => {
     location,
     occupation,
   } = req.body;
+
   const isUser = await AuthModel.findOne({ email });
   if (isUser) {
     res.status(500).json({ error: "user Already exist" });
@@ -40,9 +41,12 @@ const SignUp = async (req, res) => {
         const savedUser = await newUser.save();
         // res.status(201).json(savedUser);
         // await new_user.save();
-        res.status(201)({ msg: "Signup Sucessfully" });
+
+        res.status(201).json({ msg: "Signup Sucessfully" });
       } catch (err) {
-        res.status(500).json({ error: "someting went wrong,please try again" });
+        res
+          .status(500)
+          .json({ error: "someting went wrong,please try again !" });
       }
     });
   }
@@ -50,12 +54,15 @@ const SignUp = async (req, res) => {
 const Login = async (req, res) => {
   const { email, password } = req.body;
   const user = await AuthModel.findOne({ email });
+
   if (user) {
     const hashed_pass = user.password;
     const user_id = user._id;
     bcrypt.compare(password, hashed_pass, function (err, result) {
       if (err) {
-        res.send({ msg: "Something went wrong try after sometime" });
+        res
+          .status(400)
+          .json({ error: "Something went wrong try after sometime" });
       }
       if (result) {
         const token = jwt.sign(
@@ -65,11 +72,11 @@ const Login = async (req, res) => {
         delete user.password;
         res.status(200).json({ msg: "Login Succesfull!", token, user });
       } else {
-        res.status(400).json({ msg: "Invalid credentials. " });
+        res.status(400).json({ error: "Check details once and try again!" });
       }
     });
   } else {
-    res.status(400).json({ msg: "User does not exist. " });
+    res.status(400).json({ error: "User does not exist. " });
   }
 };
 
