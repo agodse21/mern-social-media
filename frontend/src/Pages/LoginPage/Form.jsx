@@ -110,7 +110,9 @@ const Form = () => {
           token: loggedIn.token,
         })
       );
-      navigate("/");
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     }
   };
 

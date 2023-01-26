@@ -13,7 +13,6 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
         <CssBaseline />
-       
         <AllRoutes />
       </ThemeProvider>
     </div>
