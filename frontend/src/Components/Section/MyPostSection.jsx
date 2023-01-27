@@ -16,12 +16,15 @@ import {
   Button,
   IconButton,
   useMediaQuery,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 
 import Dropzone from "react-dropzone";
+import InputUnstyled from "@mui/base/InputUnstyled";
 
 import WidgetWrapper from "../WidgetWrapper";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "../../Redux/reduxStore";
 import UserImage from "../UserImage";
@@ -38,31 +41,49 @@ const MyPostSection = ({ picturePath }) => {
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const mediumMain = palette.neutral.mediumMain;
   const medium = palette.neutral.medium;
+  const [open, setOpen] = useState(false);
+  const [Msg, setMsg] = useState(null);
+  const [status, setStatus] = useState(null);
+  const inputref = useRef();
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handlePost = async () => {
-    const formData = new FormData();
-    formData.append("userId", _id);
-    formData.append("description", post);
-    if (image) {
-      formData.append("picture", image);
-      formData.append("picturePath", image.name);
-    }
+    if (post) {
+      const formData = new FormData();
+      formData.append("userId", _id);
+      formData.append("description", post);
+      if (image) {
+        formData.append("picture", image);
+        formData.append("picturePath", image.name);
+      }
 
-    const response = await fetch(`http://localhost:7000/post/createpost`, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${token}` },
-      body: formData,
-    });
-    const posts = await response.json();
-    dispatch(setPosts({ posts }));
-    setImage(null);
-    setPost("");
+      const response = await fetch(`http://localhost:7000/post/createpost`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData,
+      });
+      const posts = await response.json();
+      dispatch(setPosts({ posts }));
+
+      setMsg("Post added successfull!");
+      setStatus("success");
+      setOpen(true);
+      setImage(null);
+      setPost("");
+    } else {
+      setMsg("Your mind is empty? if not then use input box for writing something :)");
+      setStatus("error");
+      setOpen(true);
+    }
   };
 
   return (
     <WidgetWrapper>
       <FlexBetween gap="1.5rem">
         <UserImage image={picturePath} />
+
         <InputBase
           placeholder="What's on your mind..."
           onChange={(e) => setPost(e.target.value)}
@@ -157,17 +178,29 @@ const MyPostSection = ({ picturePath }) => {
         )}
 
         <Button
-          disabled={!post}
+          // disabled={!post}
           onClick={handlePost}
           sx={{
             color: palette.background.alt,
             backgroundColor: palette.primary.main,
             borderRadius: "3rem",
+            fontWeight: "bold",
+            cursor: "pointer",
           }}
         >
           POST
         </Button>
       </FlexBetween>
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+      >
+        <Alert onClose={handleClose} severity={status} sx={{ width: "100%" }}>
+          {Msg}
+        </Alert>
+      </Snackbar>
     </WidgetWrapper>
   );
 };

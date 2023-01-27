@@ -57,6 +57,8 @@ const PostsSection = ({
         name={name}
         subtitle={location}
         userPicturePath={userPicturePath}
+        deleteList={postUserId == loggedInUserId && true}
+        postID={postId}
       />
       <Typography color={main} sx={{ mt: "1rem" }}>
         {description}

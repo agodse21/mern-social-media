@@ -19,6 +19,18 @@ const getUserPosts = async (req, res) => {
     res.status(404).json({ message: err.message });
   }
 };
+const deletePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { user_id } = req.body;
+    const post = await PostModel.findOneAndDelete({ _id: id, userId: user_id });
+    if (post) {
+      res.status(200).json({ msg: "Post deleted Successfuly!" });
+    }
+  } catch (err) {
+    res.status(400).json({ error: "Something went wrong! please try again!" });
+  }
+};
 const likePost = async (req, res) => {
   try {
     const { id } = req.params;
@@ -71,6 +83,7 @@ const PostController = {
   getUserPosts,
   likePost,
   CreatePost,
+  deletePost,
 };
 module.exports = {
   PostController,

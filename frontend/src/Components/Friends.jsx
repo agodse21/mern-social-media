@@ -2,12 +2,19 @@ import { PersonAddOutlined, PersonRemoveOutlined } from "@mui/icons-material";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setFriends } from "../Redux/reduxStore";
-
+import { setFriends, setPosts } from "../Redux/reduxStore";
+import DeleteIcon from "@mui/icons-material/Delete";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
-
-const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
+import axios from "axios";
+const Friend = ({
+  friendId,
+  name,
+  postID,
+  deleteList,
+  subtitle,
+  userPicturePath,
+}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { _id } = useSelector((state) => state.user);
@@ -21,7 +28,25 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const medium = palette.neutral.medium;
 
   const isFriend = friends.find((friend) => friend._id === friendId);
-
+  const getPosts = async () => {
+    const response = await fetch("http://localhost:7000/post", {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = await response.json();
+    dispatch(setPosts({ posts: data }));
+  };
+  const DeletePost = () => {
+    axios
+      .delete(`http://localhost:7000/post/deletepost/${postID}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        getPosts();
+      });
+  };
   const patchFriend = async () => {
     const response = await fetch(
       `http://localhost:7000/user/${_id}/${friendId}`,
@@ -65,16 +90,26 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
           </Typography>
         </Box>
       </FlexBetween>
-      <IconButton
-        onClick={() => patchFriend()}
-        sx={{ backgroundColor: primaryLight, p: "0.6rem" }}
-      >
-        {isFriend ? (
-          <PersonRemoveOutlined sx={{ color: primaryDark }} />
-        ) : (
-          <PersonAddOutlined sx={{ color: primaryDark }} />
+      <FlexBetween>
+        <IconButton
+          onClick={() => patchFriend()}
+          sx={{ backgroundColor: primaryLight, p: "0.6rem" }}
+        >
+          {isFriend ? (
+            <PersonRemoveOutlined sx={{ color: primaryDark }} />
+          ) : (
+            <PersonAddOutlined sx={{ color: primaryDark }} />
+          )}
+        </IconButton>
+        {deleteList && (
+          <IconButton
+            onClick={DeletePost}
+            sx={{ backgroundColor: primaryLight, p: "0.6rem", ml: "0.3rem" }}
+          >
+            <DeleteIcon sx={{ color: primaryDark }} />
+          </IconButton>
         )}
-      </IconButton>
+      </FlexBetween>
     </FlexBetween>
   );
 };
