@@ -3,6 +3,8 @@ import {
   EditOutlined,
   LocationOnOutlined,
   WorkOutlineOutlined,
+  LinkedIn,
+  Twitter,
 } from "@mui/icons-material";
 import { Box, Typography, Divider, useTheme } from "@mui/material";
 import { useSelector } from "react-redux";
@@ -120,7 +122,7 @@ const UserSection = ({ userId, picturePath }) => {
 
         <FlexBetween gap="1rem" mb="0.5rem">
           <FlexBetween gap="1rem">
-            <img src="../assets/twitter.png" alt="twitter" />
+          <Twitter  fontSize="large" />
             <Box>
               <Typography color={main} fontWeight="500">
                 Twitter
@@ -133,7 +135,7 @@ const UserSection = ({ userId, picturePath }) => {
 
         <FlexBetween gap="1rem">
           <FlexBetween gap="1rem">
-            <img src="../assets/linkedin.png" alt="linkedin" />
+            <LinkedIn  fontSize="large" />
             <Box>
               <Typography color={main} fontWeight="500">
                 Linkedin

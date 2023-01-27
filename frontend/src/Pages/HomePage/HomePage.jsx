@@ -1,7 +1,11 @@
 import { Box, useMediaQuery } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
+import AllPosts from "../../Components/MyPosts/AllPosts";
 import { NavBar } from "../../Components/Navbar/NavBar";
+import AdvertSection from "../../Components/Section/AdvertSection";
+import FriendListSection from "../../Components/Section/FriendListSection";
+import MyPostSection from "../../Components/Section/MyPostSection";
 import UserSection from "../../Components/Section/UserSection";
 
 export const HomePage = () => {
@@ -24,14 +28,14 @@ export const HomePage = () => {
           flexBasis={isNonMobileScreens ? "42%" : undefined}
           mt={isNonMobileScreens ? undefined : "2rem"}
         >
-          {/* <MyPostWidget picturePath={picturePath} /> */}
-          {/* <PostsWidget userId={_id} /> */}
+          <MyPostSection picturePath={picturePath} />
+          <AllPosts userId={_id} />
         </Box>
         {isNonMobileScreens && (
           <Box flexBasis="26%">
-            {/* <AdvertWidget /> */}
+            <AdvertSection />
             <Box m="2rem 0" />
-            {/* <FriendListWidget userId={_id} /> */}
+            <FriendListSection userId={_id} />
           </Box>
         )}
       </Box>
