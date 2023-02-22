@@ -96,7 +96,13 @@ const Form = () => {
 
     onSubmitProps.resetForm();
     if (loggedIn.error) {
+
       setMsg(loggedIn.error);
+      // console.log(loggedIn.error)
+      // if(loggedIn.error=="User does not exist."){
+      //   // navigate("/")
+      //   setPageType(isLogin ? "register" : "login");
+      // }
       setStatus("error");
       setOpen(true);
     }

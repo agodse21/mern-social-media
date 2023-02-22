@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import AllPosts from "../../Components/MyPosts/AllPosts";
 import { NavBar } from "../../Components/Navbar/NavBar";
 import FriendListSection from "../../Components/Section/FriendListSection";
+import { MsgSection } from "../../Components/Section/MsgSection";
 import MyPostSection from "../../Components/Section/MyPostSection";
 import UserSection from "../../Components/Section/UserSection";
 
@@ -13,6 +14,7 @@ const ProfilePage = () => {
   const { userId } = useParams();
   const token = useSelector((state) => state.token);
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
+  const loggedInUserId = useSelector((state) => state.user._id);
 
   const getUser = async () => {
     const response = await fetch(`http://localhost:7000/user/${userId}`, {
@@ -25,7 +27,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     getUser();
-  }, []); 
+  }, []);
 
   if (!user) return null;
 
@@ -50,8 +52,13 @@ const ProfilePage = () => {
         >
           <MyPostSection picturePath={user.picturePath} />
           <Box m="2rem 0" />
-          <AllPosts userId={userId} isProfile />
+          <AllPosts userId={userId} isProfile={true} />
         </Box>
+        {/* {loggedInUserId != userId && (
+          <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
+            <MsgSection userId={userId} picturePath={user.picturePath} />
+          </Box>
+        )} */}
       </Box>
     </Box>
   );

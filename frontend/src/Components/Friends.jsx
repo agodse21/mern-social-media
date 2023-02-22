@@ -1,8 +1,9 @@
 import { PersonAddOutlined, PersonRemoveOutlined } from "@mui/icons-material";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { setFriends, setPosts } from "../Redux/reduxStore";
+import MessageIcon from "@mui/icons-material/Message";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
@@ -14,13 +15,13 @@ const Friend = ({
   deleteList,
   subtitle,
   userPicturePath,
+  msgIcon,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { _id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
   const friends = useSelector((state) => state.user.friends);
-
   const { palette } = useTheme();
   const primaryLight = palette.primary.light;
   const primaryDark = palette.primary.dark;
@@ -91,6 +92,15 @@ const Friend = ({
         </Box>
       </FlexBetween>
       <FlexBetween>
+        {msgIcon && (
+          <Link to={`/message/${friendId}`}>
+            <IconButton
+              sx={{ backgroundColor: primaryLight, p: "0.6rem", mr: "0.3rem" }}
+            >
+              <MessageIcon sx={{ color: primaryDark }} />
+            </IconButton>
+          </Link>
+        )}
         <IconButton
           onClick={() => patchFriend()}
           sx={{ backgroundColor: primaryLight, p: "0.6rem" }}
@@ -101,6 +111,7 @@ const Friend = ({
             <PersonAddOutlined sx={{ color: primaryDark }} />
           )}
         </IconButton>
+
         {deleteList && (
           <IconButton
             onClick={DeletePost}

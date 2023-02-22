@@ -59,6 +59,7 @@ const PostsSection = ({
         userPicturePath={userPicturePath}
         deleteList={postUserId == loggedInUserId && true}
         postID={postId}
+        msgIcon={postUserId != loggedInUserId && true}
       />
       <Typography color={main} sx={{ mt: "1rem" }}>
         {description}
