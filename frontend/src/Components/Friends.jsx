@@ -27,7 +27,7 @@ const Friend = ({
   const primaryDark = palette.primary.dark;
   const main = palette.neutral.main;
   const medium = palette.neutral.medium;
-
+  // const isFriend =[]
   const isFriend = friends.find((friend) => friend._id === friendId);
   const getPosts = async () => {
     const response = await fetch("http://localhost:7000/post", {

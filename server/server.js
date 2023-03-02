@@ -1,13 +1,12 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
-const multer = require("multer");
+// const multer = require("multer");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const path = require("path");
-const { fileURLToPath } = require("url");
+// const { fileURLToPath } = require("url");
 const { connection } = require("./config/db");
 const { AuthRouter } = require("./Routes/auth.route");
 const { Userrouter } = require("./Routes/user.route");
