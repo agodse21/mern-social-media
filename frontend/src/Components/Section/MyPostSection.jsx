@@ -59,11 +59,14 @@ const MyPostSection = ({ picturePath }) => {
         formData.append("picturePath", image.name);
       }
 
-      const response = await fetch(`http://localhost:7000/post/createpost`, {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-        body: formData,
-      });
+      const response = await fetch(
+        `https://sociogram-backendd.onrender.com/post/createpost`,
+        {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+          body: formData,
+        }
+      );
       const posts = await response.json();
       dispatch(setPosts({ posts }));
 
@@ -73,7 +76,9 @@ const MyPostSection = ({ picturePath }) => {
       setImage(null);
       setPost("");
     } else {
-      setMsg("Your mind is empty? if not then use input box for writing something :)");
+      setMsg(
+        "Your mind is empty? if not then use input box for writing something :)"
+      );
       setStatus("error");
       setOpen(true);
     }
