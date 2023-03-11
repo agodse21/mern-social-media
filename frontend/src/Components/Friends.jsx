@@ -30,27 +30,33 @@ const Friend = ({
   // const isFriend =[]
   const isFriend = friends.find((friend) => friend._id === friendId);
   const getPosts = async () => {
-    const response = await fetch("http://localhost:7000/post", {
-      method: "GET",
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const response = await fetch(
+      "https://sociogram-backendd.onrender.com/post",
+      {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
     const data = await response.json();
     dispatch(setPosts({ posts: data }));
   };
   const DeletePost = () => {
     axios
-      .delete(`http://localhost:7000/post/deletepost/${postID}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .delete(
+        `https://sociogram-backendd.onrender.com/post/deletepost/${postID}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => {
         getPosts();
       });
   };
   const patchFriend = async () => {
     const response = await fetch(
-      `http://localhost:7000/user/${_id}/${friendId}`,
+      `https://sociogram-backendd.onrender.com/user/${_id}/${friendId}`,
       {
         method: "PATCH",
         headers: {
