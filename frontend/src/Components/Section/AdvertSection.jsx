@@ -20,7 +20,7 @@ const AdvertSection = () => {
         width="100%"
         height="auto"
         alt="advert"
-        src="http://localhost:7000/assets/addImg.webp"
+        src="https://sociogram-backendd.onrender.com/assets/addImg.webp"
         style={{ borderRadius: "0.75rem", margin: "0.75rem 0" }}
       />
       <FlexBetween>
