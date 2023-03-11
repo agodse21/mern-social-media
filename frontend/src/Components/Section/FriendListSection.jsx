@@ -14,7 +14,7 @@ const FriendListSection = ({ userId }) => {
 
   const getFriends = async () => {
     const response = await fetch(
-      `http://localhost:7000/user/${userId}/friends`,
+      `https://sociogram-backendd.onrender.com/user/${userId}/friends`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
