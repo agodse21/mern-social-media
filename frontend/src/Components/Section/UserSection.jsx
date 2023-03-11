@@ -24,7 +24,7 @@ const UserSection = ({ userId, picturePath }) => {
   const main = palette.neutral.main;
 
   const getUser = async () => {
-    const response = await fetch(`http://localhost:7000/user/${userId}`, {
+    const response = await fetch(`https://sociogram-backendd.onrender.com/user/${userId}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
